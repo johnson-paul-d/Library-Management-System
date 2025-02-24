@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Books</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 15px;
+        }
+        main {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .search-container input {
+            width: 80%;
+            padding: 10px;
+            border: 2px solid #2c3e50;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #2c3e50;
+            color: white;
+        }
+        button {
+            padding: 8px 12px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        form input {
+            padding: 10px;
+            width: calc(33% - 10px);
+            border: 2px solid #2c3e50;
+            border-radius: 5px;
+        }
+        @media (max-width: 768px) {
+            form input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📚 Library Books</h1>
+        <nav>
+            <a href="/">🏠 Home</a>
+            <a href="/books">📖 Books</a>
+            <a href="/members">👥 Members</a>
+            <a href="/transactions">🔄 Transactions</a>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>📖 Available Books</h2>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="🔎 Search by title or author..." onkeyup="filterBooks()">
+        </div>
+        <table id="booksTable">
+            <thead>
+                <tr>
+                    <th>📌 Title</th>
+                    <th>✍️ Author</th>
+                    <th>📖 Genre</th>
+                    <th>📦 Stock</th>
+                    <th>💰 Rent Fee</th>
+                    <th>⚡ Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <h3>➕ Add a New Book</h3>
+        <form id="addBookForm">
+            <input type="text" id="title" placeholder="📌 Title" required>
+            <input type="text" id="author" placeholder="✍️ Author" required>
+            <input type="text" id="genre" placeholder="📖 Genre" required>
+            <input type="number" id="stock" placeholder="📦 Stock" required>
+            <input type="number" id="rent_fee" placeholder="💰 Rent Fee" required>
+            <button type="submit">➕ Add Book</button>
+        </form>
+    </main>
+    
+    <script src="static/js/scripts.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadBooks();
+        });
+
+        function loadBooks() {
+            fetch('/api/books')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector("#booksTable tbody");
+                    tableBody.innerHTML = "";
+                    data.forEach(book => {
+                        tableBody.innerHTML += `
+                            <tr>
+                                <td>${book.title}</td>
+                                <td>${book.author}</td>
+                                <td>${book.genre}</td>
+                                <td>${book.stock}</td>
+                                <td>₹${book.rent_fee}</td>
+                                <td><button onclick="deleteBook(${book.book_id})">🗑️ Delete</button></td>
+                            </tr>`;
+                    });
+                })
+                .catch(error => console.error("Error loading books:", error));
+        }
+
+        function filterBooks() {
+            const query = document.getElementById("search").value.toLowerCase();
+            document.querySelectorAll("#booksTable tbody tr").forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(query) ? "" : "none";
+            });
+        }
+    </script>
+</body>
+</html>

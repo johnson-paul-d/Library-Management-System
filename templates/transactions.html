@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Transactions</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 15px;
+        }
+        main {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .search-container input {
+            width: 80%;
+            padding: 10px;
+            border: 2px solid #2c3e50;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #2c3e50;
+            color: white;
+        }
+        button {
+            padding: 8px 12px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔄 Library Transactions</h1>
+        <nav>
+            <a href="/">🏠 Home</a>
+            <a href="/books">📖 Books</a>
+            <a href="/members">👥 Members</a>
+            <a href="/transactions" class="active">🔄 Transactions</a>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>📌 Transaction List</h2>
+        <div class="search-container">
+            <input type="text" id="searchTransactions" placeholder="🔎 Search by Book or Member" onkeyup="filterTransactions()">
+        </div>
+        <table id="transactionsTable">
+            <thead>
+                <tr>
+                    <th>🔢 Transaction ID</th>
+                    <th>📖 Book Title</th>
+                    <th>👤 Member Name</th>
+                    <th>📅 Issue Date</th>
+                    <th>📅 Return Date</th>
+                    <th>💰 Rent Fee</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </main>
+    
+    <script src="static/js/scripts.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadTransactions();
+            loadMembers();
+            loadBooks();
+        });
+        function filterTransactions() {
+            const query = document.getElementById("searchTransactions").value.toLowerCase();
+            document.querySelectorAll("#transactionsTable tbody tr").forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(query) ? "" : "none";
+            });
+        }
+    </script>
+    
+    <h2>📖 Issue a Book</h2>
+    <form onsubmit="event.preventDefault(); issueBook();">
+        <input type="number" id="issue_member" placeholder="Member ID" required>
+        <input type="number" id="issue_book" placeholder="Book ID" required>
+        <button type="submit">📘 Issue Book</button>
+    </form>
+    
+    <h2>📖 Return a Book</h2>
+    <form onsubmit="event.preventDefault(); returnBook();">
+        <label for="return_member">👤 Select Member:</label>
+        <select id="return_member" required></select>
+        <label for="return_book">📖 Select Book:</label>
+        <select id="return_book" required></select>
+        <button type="submit">🔄 Return Book</button>
+    </form>
+</body>
+</html>

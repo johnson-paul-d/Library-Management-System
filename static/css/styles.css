@@ -1,0 +1,130 @@
+/* ✅ Light Theme (Default) */
+body {
+    font-family: "Poppins", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Light Gray */
+    color: #333; /* Dark Gray for readability */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ✅ Dark Mode */
+body.dark-mode {
+    background-color: #121212; /* Near Black */
+    color: #e0e0e0; /* Light Gray */
+}
+
+/* ✅ Header */
+header {
+    background: linear-gradient(135deg, #2c3e50, #34495e); /* Deep Blue */
+    color: #fff;
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ Navigation */
+nav {
+    background: #34495e; /* Slightly lighter Blue */
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    color: #f8f9fa;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+    color: #1abc9c; /* Teal for fresh contrast */
+}
+
+/* ✅ Theme Toggle Button */
+#themeToggle {
+    background: #1abc9c; /* Teal */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+#themeToggle:hover {
+    background: #16a085;
+}
+
+/* ✅ Dark Mode Styling */
+.dark-mode nav {
+    background: #222831; /* Deep Gray-Blue */
+}
+
+.dark-mode header {
+    background: linear-gradient(135deg, #1e272e, #222831);
+}
+
+.dark-mode #themeToggle {
+    background: #ffcc00; /* Gold accent */
+    color: black;
+}
+
+/* ✅ Main Content */
+main {
+    padding: 30px;
+    max-width: 90%;
+    margin: auto;
+    text-align: center;
+}
+
+/* ✅ Intro Section */
+.intro {
+    background: white;
+    padding: 30px;
+    margin: auto;
+    width: 60%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ✅ Dark Mode Intro */
+.dark-mode .intro {
+    background: #2c3e50;
+    color: #e0e0e0;
+}
+
+/* ✅ Buttons */
+button {
+    background: #1abc9c; /* Teal */
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+button:hover {
+    background: #16a085;
+    transform: scale(1.05);
+}
+
+/* ✅ Dark Mode Buttons */
+.dark-mode button {
+    background: #ffcc00; /* Gold */
+    color: black;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    .intro {
+        width: 90%;
+    }
+}
